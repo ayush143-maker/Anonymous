@@ -3,198 +3,500 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>void</title>
+  <title>Eo chat</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cyan: #00ffff;
+      --light-blue: #add8e6;
+      --emerald: #50c878;
+      --indigo: #4b0082;
+      --bg: #0a0a0a;
+      --panel: #111111;
+      --text: #dddddd;
+      --dim: #888888;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: #000;
-      color: #0f0;
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Courier New', Courier, monospace;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      font-size: 13px;
-      line-height: 1.5;
       overflow: hidden;
     }
-    #header {
-      padding: 10px 16px;
-      border-bottom: 1px solid #0f0;
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      opacity: 0.8;
-      flex-shrink: 0;
-    }
-    #log {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-    }
-    .msg {
-      margin-bottom: 14px;
-      animation: in 0.15s ease;
-      word-break: break-word;
-    }
-    @keyframes in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-    .msg.out {
-      animation: out 0.4s ease forwards;
-    }
-    @keyframes out { to { opacity: 0; transform: translateX(-20px); max-height: 0; margin: 0; } }
-    .json-comment { color: #555; font-size: 11px; }
-    .json-key { color: #0f0; }
-    .json-str { color: #0ff; }
-    #input-area {
-      border-top: 1px solid #0f0;
-      padding: 12px 16px;
+
+    header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       flex-shrink: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
     }
-    #inp {
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--cyan), var(--light-blue), var(--emerald), var(--indigo));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    #connection-status {
+      font-size: 0.85rem;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #connection-status .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff5555;
+      transition: background 0.3s;
+    }
+
+    #connection-status .dot.connected {
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    #chat-container {
       flex: 1;
-      background: transparent;
-      border: none;
-      color: #0f0;
-      font-family: inherit;
-      font-size: 13px;
-      outline: none;
-      caret-color: #0f0;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-    #inp::placeholder { color: #0f0; opacity: 0.3; }
-    .prompt { color: #0f0; opacity: 0.5; user-select: none; }
+
+    .msg-block {
+      background: rgba(17, 17, 17, 0.9);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      position: relative;
+      border: 1px solid transparent;
+      background-image: linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.95)), 
+                        linear-gradient(135deg, var(--cyan), var(--light-blue), var(--emerald), var(--indigo));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .msg-block:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .msg-header {
+      color: var(--cyan);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+    }
+
+    .msg-json {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .msg-json .json-key {
+      color: var(--light-blue);
+    }
+
+    .msg-json .json-string {
+      color: var(--emerald);
+    }
+
+    .msg-json .json-number {
+      color: var(--indigo);
+    }
+
+    #input-area {
+      flex-shrink: 0;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(0, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      display: flex;
+      gap: 1rem;
+    }
+
+    #message-input {
+      flex: 1;
+      background: rgba(17, 17, 17, 0.8);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    #message-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    #send-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      border: none;
+      border-radius: 4px;
+      color: #000;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: opacity 0.2s, transform 0.2s;
+      text-transform: uppercase;
+    }
+
+    #send-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    #send-btn:active {
+      transform: scale(0.98);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--cyan), var(--emerald));
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
-  <div id="header">
-    <span id="uid">id: ...</span>
-    <span id="status">connecting...</span>
-  </div>
-  <div id="log"></div>
+  <header>
+    <h1>Eo chat</h1>
+    <div id="connection-status">
+      <span class="dot" id="status-dot"></span>
+      <span id="status-text">Connecting...</span>
+    </div>
+  </header>
+
+  <div id="chat-container"></div>
+
   <div id="input-area">
-    <span class="prompt">></span>
-    <input id="inp" type="text" placeholder="type and press enter" autocomplete="off" autofocus spellcheck="false">
+    <input type="text" id="message-input" placeholder="Type a message and press Enter..." autofocus>
+    <button id="send-btn">Send</button>
   </div>
 
   <script type="module">
     import mqtt from 'https://unpkg.com/mqtt/dist/mqtt.esm.js';
 
-    // random anonymous id
-    const uid = Math.random().toString(36).slice(2, 10);
-    document.getElementById('uid').textContent = 'id: ' + uid;
-    const statusEl = document.getElementById('status');
-    const logEl = document.getElementById('log');
-    const inp = document.getElementById('inp');
+    // ========== CONFIGURATION ==========
+    const BROKER_URL = 'wss://broker.hivemq.com:8884/mqtt';
+    const TOPIC_CHAT = 'voidbox/m/v2';
+    const TOPIC_PRESENCE = 'voidbox/p/v2';
+    const HEARTBEAT_INTERVAL_MS = 4000;  // send presence every 4s
+    const CHECK_INTERVAL_MS = 5000;      // check timeouts every 5s
+    const TIMEOUT_MS = 12000;            // 12s offline threshold
 
-    const T_MSG = 'voidbox/m/v2';
-    const T_PRES = 'voidbox/p/v2';
-    const HB = 4000;      // heartbeat every 4s
-    const TO = 12000;     // user timeout 12s
+    // ========== STATE ==========
+    const userId = generateRandomId(8);
+    const msgs = new Map();      // msgId -> { element, userId }
+    const userMsgs = new Map();  // userId -> Set(msgId)
+    const users = new Map();     // userId -> lastSeenTimestamp
 
-    const msgs = new Map();      // msgId -> {el, uid}
-    const userMsgs = new Map();  // uid -> Set(msgId)
-    const users = new Map();     // uid -> lastSeen
+    let client = null;
+    let connected = false;
 
-    const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
-      clientId: 'v_' + uid + '_' + Date.now(),
-      clean: true,
-      reconnectPeriod: 3000,
-    });
+    // ========== DOM ELEMENTS ==========
+    const chatContainer = document.getElementById('chat-container');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
 
-    client.on('connect', () => {
-      statusEl.textContent = 'online';
-      statusEl.style.color = '#0f0';
-      client.subscribe([T_MSG, T_PRES]);
-      beat();
-    });
+    // ========== UTILITY FUNCTIONS ==========
+    function generateRandomId(length) {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
 
-    client.on('disconnect', () => {
-      statusEl.textContent = 'offline';
-      statusEl.style.color = '#f00';
-    });
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
 
-    client.on('error', () => {
-      statusEl.textContent = 'error';
-      statusEl.style.color = '#f00';
-    });
+    function formatTime(timestamp) {
+      const date = new Date(timestamp);
+      const hh = String(date.getHours()).padStart(2, '0');
+      const mm = String(date.getMinutes()).padStart(2, '0');
+      const ss = String(date.getSeconds()).padStart(2, '0');
+      return `${hh}:${mm}:${ss}`;
+    }
 
-    client.on('message', (topic, payload) => {
+    function generateMessageId() {
+      return `${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+    }
+
+    function updateConnectionStatus(connected) {
+      statusDot.classList.toggle('connected', connected);
+      statusText.textContent = connected ? 'Connected' : 'Disconnected';
+    }
+
+    // ========== MQTT SETUP ==========
+    async function connectMqtt() {
       try {
-        const d = JSON.parse(payload.toString());
-        if (topic === T_MSG) onMsg(d);
-        if (topic === T_PRES) onPres(d);
-      } catch(e) {}
-    });
+        client = mqtt.connect(BROKER_URL, {
+          clientId: `eo_chat_${userId}_${Date.now()}`,
+          keepalive: 30,
+          clean: true,
+          reconnectPeriod: 3000,
+          connectTimeout: 10000,
+        });
 
-    function onMsg(d) {
-      if (!d.u || !d.t || !d.m) return;
-      if (msgs.has(d.m)) return;
-
-      const el = document.createElement('div');
-      el.className = 'msg';
-      const tm = new Date(d.ts).toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      el.innerHTML = `<div class="json-comment">// ${d.u.slice(0,6)} @ ${tm}</div>{<br>&nbsp;&nbsp;<span class="json-key">"from"</span>: <span class="json-str">"${esc(d.u)}"</span>,<br>&nbsp;&nbsp;<span class="json-key">"text"</span>: <span class="json-str">"${esc(d.t)}"</span>,<br>&nbsp;&nbsp;<span class="json-key">"time"</span>: <span class="json-str">"${tm}"</span><br>}`;
-      logEl.appendChild(el);
-      logEl.scrollTop = logEl.scrollHeight;
-
-      msgs.set(d.m, {el, u: d.u});
-      if (!userMsgs.has(d.u)) userMsgs.set(d.u, new Set());
-      userMsgs.get(d.u).add(d.m);
-    }
-
-    function onPres(d) {
-      if (!d.u) return;
-      users.set(d.u, Date.now());
-      updateStatus();
-    }
-
-    function beat() {
-      client.publish(T_PRES, JSON.stringify({u: uid, ts: Date.now()}));
-    }
-    setInterval(beat, HB);
-    setInterval(checkUsers, 5000);
-
-    function checkUsers() {
-      const now = Date.now();
-      let changed = false;
-      for (const [id, last] of users) {
-        if (now - last > TO) {
-          if (userMsgs.has(id)) {
-            for (const mid of userMsgs.get(id)) {
-              if (msgs.has(mid)) {
-                const o = msgs.get(mid);
-                o.el.classList.add('out');
-                setTimeout(() => o.el.remove(), 400);
-                msgs.delete(mid);
-              }
+        client.on('connect', () => {
+          connected = true;
+          updateConnectionStatus(true);
+          client.subscribe([TOPIC_CHAT, TOPIC_PRESENCE], { qos: 0 }, (err) => {
+            if (err) {
+              console.error('Subscribe error:', err);
+            } else {
+              console.log('Subscribed to topics');
             }
-            userMsgs.delete(id);
+          });
+          // Start heartbeat immediately
+          publishPresence();
+          heartbeatInterval = setInterval(publishPresence, HEARTBEAT_INTERVAL_MS);
+        });
+
+        client.on('message', (topic, payload) => {
+          const messageStr = payload.toString();
+          try {
+            const data = JSON.parse(messageStr);
+            if (topic === TOPIC_CHAT) {
+              handleChatMessage(data);
+            } else if (topic === TOPIC_PRESENCE) {
+              handlePresenceMessage(data);
+            }
+          } catch (e) {
+            console.warn('Invalid JSON received:', messageStr);
           }
-          users.delete(id);
-          changed = true;
+        });
+
+        client.on('error', (err) => {
+          console.error('MQTT error:', err);
+          connected = false;
+          updateConnectionStatus(false);
+        });
+
+        client.on('close', () => {
+          connected = false;
+          updateConnectionStatus(false);
+          if (heartbeatInterval) clearInterval(heartbeatInterval);
+        });
+
+        client.on('reconnect', () => {
+          statusText.textContent = 'Reconnecting...';
+        });
+      } catch (err) {
+        console.error('Connection failed:', err);
+        updateConnectionStatus(false);
+      }
+    }
+
+    // ========== MESSAGE HANDLERS ==========
+    function handleChatMessage(data) {
+      if (!data || !data.u || !data.m || !data.t || !data.ts) return;
+
+      // Ignore duplicate messages (possible with QoS 0 on some brokers)
+      if (msgs.has(data.m)) return;
+
+      // Track user's last seen from chat message too (if they haven't sent presence)
+      users.set(data.u, Date.now());
+
+      // Create DOM element
+      const msgBlock = document.createElement('div');
+      msgBlock.className = 'msg-block';
+
+      const timeStr = formatTime(data.ts);
+      const header = document.createElement('div');
+      header.className = 'msg-header';
+      header.textContent = `// ${data.u} @ ${timeStr}`;
+
+      const jsonObj = {
+        from: data.u,
+        text: data.t,
+        time: timeStr
+      };
+
+      // Build JSON string with syntax highlighting spans
+      const jsonStr = JSON.stringify(jsonObj, null, 2);
+      const jsonPre = document.createElement('pre');
+      jsonPre.className = 'msg-json';
+      jsonPre.innerHTML = highlightJson(jsonStr);
+
+      msgBlock.appendChild(header);
+      msgBlock.appendChild(jsonPre);
+      chatContainer.appendChild(msgBlock);
+
+      // Scroll to bottom
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      // Update maps
+      msgs.set(data.m, { element: msgBlock, userId: data.u });
+      if (!userMsgs.has(data.u)) {
+        userMsgs.set(data.u, new Set());
+      }
+      userMsgs.get(data.u).add(data.m);
+    }
+
+    function handlePresenceMessage(data) {
+      if (!data || !data.u || !data.ts) return;
+      users.set(data.u, data.ts);
+    }
+
+    function publishPresence() {
+      if (!client || !connected) return;
+      const payload = JSON.stringify({
+        u: userId,
+        ts: Date.now()
+      });
+      client.publish(TOPIC_PRESENCE, payload, { qos: 0 });
+    }
+
+    function publishChatMessage(text) {
+      if (!client || !connected || !text.trim()) return;
+      const messageId = generateMessageId();
+      const payload = JSON.stringify({
+        u: userId,
+        m: messageId,
+        t: text.trim(),
+        ts: Date.now()
+      });
+      client.publish(TOPIC_CHAT, payload, { qos: 0 });
+    }
+
+    // ========== JSON HIGHLIGHTING ==========
+    function highlightJson(jsonStr) {
+      // Escape HTML first
+      const escaped = escapeHtml(jsonStr);
+      // Simple regex-based highlighting (not perfect but works for our format)
+      return escaped.replace(
+        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+        (match) => {
+          let cls = 'json-number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'json-key';
+            } else {
+              cls = 'json-string';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'json-number';
+          } else if (/null/.test(match)) {
+            cls = 'json-number';
+          }
+          return `<span class="${cls}">${match}</span>`;
+        }
+      );
+    }
+
+    // ========== PRESENCE CHECKER ==========
+    let heartbeatInterval = null;
+    let checkerInterval = null;
+
+    function checkOfflineUsers() {
+      const now = Date.now();
+      for (const [uid, lastSeen] of users.entries()) {
+        if (now - lastSeen > TIMEOUT_MS) {
+          // User offline - remove their messages
+          removeUserMessages(uid);
+          users.delete(uid);
         }
       }
-      if (changed) updateStatus();
     }
 
-    function updateStatus() {
-      statusEl.textContent = 'online | ' + users.size + ' active';
+    function removeUserMessages(uid) {
+      const msgIds = userMsgs.get(uid);
+      if (!msgIds) return;
+      for (const msgId of msgIds) {
+        const msgEntry = msgs.get(msgId);
+        if (msgEntry && msgEntry.element && msgEntry.element.parentNode) {
+          msgEntry.element.parentNode.removeChild(msgEntry.element);
+        }
+        msgs.delete(msgId);
+      }
+      userMsgs.delete(uid);
     }
 
-    function send() {
-      const t = inp.value.trim();
-      if (!t) return;
-      const mid = uid + '_' + Date.now();
-      client.publish(T_MSG, JSON.stringify({u: uid, m: mid, t: t, ts: Date.now()}));
-      inp.value = '';
+    // ========== UI EVENTS ==========
+    function sendMessage() {
+      const text = messageInput.value;
+      if (text.trim()) {
+        publishChatMessage(text);
+        messageInput.value = '';
+        messageInput.focus();
+      }
     }
 
-    inp.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
 
-    function esc(s) {
-      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    // ========== INITIALIZATION ==========
+    function init() {
+      connectMqtt();
+
+      // Start presence checker
+      checkerInterval = setInterval(checkOfflineUsers, CHECK_INTERVAL_MS);
+
+      // Display local user ID in status
+      console.log(`Eo chat: your anonymous ID is ${userId}`);
     }
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (heartbeatInterval) clearInterval(heartbeatInterval);
+      if (checkerInterval) clearInterval(checkerInterval);
+      if (client && connected) {
+        client.end();
+      }
+    });
+
+    // Start everything
+    init();
   </script>
 </body>
 </html>
