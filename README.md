@@ -10,6 +10,6 @@ No package installation is required. Open `index.html` in a modern browser, or s
 
 Visit http://localhost:8000.
 
-## Making changes
+## Making and reviewing changes
 
-The page is contained in `index.html`. Preserve the terminal-style contrast and responsive layout when editing it.
+The page is contained in `index.html`. After editing, reload the page in your browser and review the terminal-style contrast and responsive layout, including at a narrow window width.
