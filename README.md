@@ -62,3 +62,8 @@ These are future checks, not compliance claims or verified results:
 - [ ] If meaningful media is present or added, check its text alternatives; treat decorative media accordingly. If motion is present or added, check reduced-motion behavior.
 
 No review results are recorded here; complete the checklists in a browser after making changes.
+
+## Final release review
+
+- Open `index.html` from the published location and confirm the page loads as expected.
+- Review the published result once on a narrow screen and once on a wider screen; treat this as a release check, not an automated test report.
