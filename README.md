@@ -25,4 +25,15 @@ These are actions to perform, not verified results:
 - [ ] Try the visible input and any other controls. Check what the page actually does; do not assume input is sent to a service or saved.
 - [ ] Inspect the terminal-style text, contrast, and layout at both narrow and wide window widths.
 
-No review results are recorded here; complete the checklist in the browser after making changes.
+## Accessibility review checklist
+
+These are future checks to perform, not compliance claims or verified results:
+
+- [ ] Use Tab and Shift+Tab to reach the message input and any other interactive controls; check that keyboard order follows the page and that keyboard users can operate each control.
+- [ ] While tabbing, confirm the focused control has a visible focus indicator against the dark, green terminal-style presentation.
+- [ ] Check that the input and any controls have meaningful accessible names, not just placeholder text or visual styling.
+- [ ] Check text and control contrast against their backgrounds, including the green text on the dark screen.
+- [ ] If images or other meaningful media are present or added, check that they have appropriate text alternatives; treat purely decorative media accordingly.
+- [ ] If motion or animated effects are present or added, check that they respect the operating system's reduced-motion preference.
+
+No review results are recorded here; complete the checklists in the browser after making changes.
