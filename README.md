@@ -21,7 +21,10 @@ The page is contained in `index.html`. Edit its visible text and presentation th
 These are actions to perform, not verified results:
 
 - [ ] Open `index.html` in a browser, or start the local server above and open its address.
-- [ ] Check the page for missing images or other media. If you change or add references, verify that each path points to a file in the expected location.
+- [ ] Review image, audio, video, and font references in `index.html`. Confirm each local path points to a file at the expected location.
+- [ ] Check whether referenced media is actually used; remove obsolete files and references only after confirming nothing else depends on them.
+- [ ] Look for unusually large media files. If an asset is larger than needed for its displayed role, consider resizing or compressing it while checking that visual or audio quality remains suitable.
+- [ ] Inspect external font or script references, if any. Confirm each is intentional and still needed; check the page's fallback appearance if a font cannot load.
 - [ ] Try the visible input and any other controls. Check what the page actually does; do not assume input is sent to a service or saved.
 - [ ] Inspect the terminal-style text, contrast, and layout at both narrow and wide window widths.
 
