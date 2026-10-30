@@ -16,6 +16,10 @@ Visit [http://localhost:8000](http://localhost:8000). To host the page, serve `i
 
 The page is contained in `index.html`. Edit its visible text and presentation there. If you change or add asset references, keep the referenced files alongside the page at the corresponding relative paths; this repository lists no separate asset directory.
 
+## Configuration and data handling
+
+The listed repository files do not include an `.env.example` or separate configuration file. Do not add real credentials or private data to `index.html` or other tracked files. This page is delivered to visitors' browsers, so any value included in its HTML, scripts, or browser requests is visible and cannot be kept secret. If you add a configuration template, use placeholders rather than real values and document its purpose without publishing credentials. Do not assume the input is transmitted or saved; avoid entering real personal or sensitive information unless you have verified where it goes and how it is handled.
+
 ## Browser and layout review checklist
 
 These are checks to perform, not verified results. No browser compatibility review is recorded here.
