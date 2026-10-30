@@ -16,6 +16,14 @@ Visit [http://localhost:8000](http://localhost:8000). To host the page, serve `i
 
 The page is contained in `index.html`. Edit its visible text and presentation there. If you change or add asset references, keep the referenced files alongside the page at the corresponding relative paths; this repository lists no separate asset directory.
 
+## Troubleshooting
+
+Use these as diagnostic steps; they are not reports of known problems.
+
+1. Confirm that you opened this repository's `index.html`.
+2. If the page or an asset is missing, check that any referenced local file exists at the path used in `index.html`. Preserve relative paths when moving files, or update the references.
+3. Open the browser developer tools and inspect the Console and Network panel for errors and failed requests. A failed local-file request differs from an unavailable remote resource; check the request URL before deciding what to change. No external resources are listed for this page in the repository overview.
+
 ## Configuration and data handling
 
 The listed repository files do not include an `.env.example` or separate configuration file. Do not add real credentials or private data to `index.html` or other tracked files. This page is delivered to visitors' browsers, so any value included in its HTML, scripts, or browser requests is visible and cannot be kept secret. If you add a configuration template, use placeholders rather than real values and document its purpose without publishing credentials. Do not assume the input is transmitted or saved; avoid entering real personal or sensitive information unless you have verified where it goes and how it is handled.
@@ -25,8 +33,6 @@ The listed repository files do not include an `.env.example` or separate configu
 These are checks to perform, not verified results. No browser compatibility review is recorded here.
 
 - [ ] Open the page in current versions of the browsers relevant to your audience. If an issue occurs, note the browser and version so it can be reproduced.
-- [ ] Open the browser developer tools and inspect the Console and Network panel. Investigate JavaScript errors, failed requests, and other unexpected warnings; distinguish expected behavior from problems rather than assuming an empty console.
-- [ ] Check every local asset reference in `index.html` against the files and paths in the repository. If you add remote resources, verify their URLs and check how the page appears when they are unavailable.
 - [ ] Compare a narrow mobile-sized viewport with a desktop-sized viewport. Check that the message log and input remain visible, readable, and usable, and that resizing does not obscure content.
 - [ ] Try the visible input and any other controls. Observe what the page actually does; do not assume input is sent to a service or saved.
 
