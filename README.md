@@ -12,6 +12,6 @@ python -m http.server 8000
 
 Visit [http://localhost:8000](http://localhost:8000). To host the page, serve `index.html` and any referenced assets together as static files.
 
-## Review changes
+## Personalize and review
 
-The page is contained in `index.html`. After editing, reload it in your browser and review the terminal-style contrast and layout, including at a narrow window width.
+The page is contained in `index.html`. Edit its visible text and presentation there. If you change or add asset references, keep the referenced files alongside the page at the corresponding relative paths; this repository lists no separate asset directory. Reload the page after editing and review the terminal-style contrast and layout, including at a narrow window width.
