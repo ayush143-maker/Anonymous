@@ -1,19 +1,17 @@
 # Anonymous
 
-An experimental, dark terminal-style single-page web interface titled “void”. The current page includes a compact input/send interaction; this README does not assume any message persistence or backend behavior.
+**Anonymous** is a compact, terminal-inspired web experiment. Its dark screen, green monospace text, and small input area give the page the feel of an old-school command console, while keeping the interaction simple and focused.
 
-## Run locally
+The current interface is built around a message log and an input/send control. This README describes the front-end experience only; it does not assume a connected chat service, saved conversation history, or a remote backend.
 
-Open index.html in a modern browser. If browser restrictions block local assets or APIs, serve the folder over HTTP.
+## Open the page
 
-## Structure and assets
+There is no package installation step for the current repository. Open the index.html file in a modern browser. For a local web server, run this from the repository directory:
 
-`index.html` is the primary entry point. Keep linked images, audio, scripts, and styles in their existing relative locations; renaming files may break references.
+    python -m http.server 8000
 
-## Preview and deployment
-
-Open the page in a modern browser. If local-file behavior is restricted, start a simple HTTP server from this folder and open the local address in your browser. For static hosting, publish the correct root folder and check asset paths after deployment.
+Then visit http://localhost:8000.
 
 ## Making changes
 
-Test the page after edits and check both phone-sized and desktop-sized viewports. Confirm that buttons and other visible interactions work in the deployed version as well as locally.
+The page is self-contained in index.html. Keep the layout responsive and preserve the terminal-style contrast when adjusting typography, spacing, or interaction states. If a backend is added later, document its endpoint and setup separately rather than treating the current interface as a working messaging service.
