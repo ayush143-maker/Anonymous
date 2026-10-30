@@ -16,6 +16,10 @@ Visit [http://localhost:8000](http://localhost:8000). To host the page, serve `i
 
 The page is contained in `index.html`. Edit its visible text and presentation there. If you change or add asset references, keep the referenced files alongside the page at the corresponding relative paths; this repository lists no separate asset directory.
 
+## Contributor handoff
+
+Keep a change focused on the intended page or asset. Preserve existing filenames and relative references unless a rename or move is necessary, and update references in `index.html` if paths change. In your handoff, summarize what changed and which files were affected. Manually review the page before publishing; the checklist below describes checks to perform, not results already verified.
+
 ## Troubleshooting
 
 Use these as diagnostic steps; they are not reports of known problems.
