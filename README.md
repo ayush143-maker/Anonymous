@@ -1,6 +1,6 @@
 # Anonymous
 
-A compact, terminal-inspired web experiment with a dark screen, green monospace text, a message log, and an input field. The page provides a front-end experience: it does not establish that input is sent to a chat service or that conversation history is saved.
+A compact, terminal-inspired web experiment with a dark screen, green monospace text, a message log, and an input field. The page provides a front-end experience; it does not establish that input is sent to a chat service or that conversation history is saved.
 
 ## Open the page
 
