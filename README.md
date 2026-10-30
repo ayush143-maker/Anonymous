@@ -1,17 +1,15 @@
 # Anonymous
 
-**Anonymous** is a compact, terminal-inspired web experiment. Its dark screen, green monospace text, and small input area give the page the feel of an old-school command console, while keeping the interaction simple and focused.
-
-The current interface is built around a message log and an input/send control. This README describes the front-end experience only; it does not assume a connected chat service, saved conversation history, or a remote backend.
+A compact, terminal-inspired web experiment with a dark screen, green monospace text, and a simple message-log and input interface. The page provides a front-end experience; this README does not assume a connected chat service or saved conversation history.
 
 ## Open the page
 
-There is no package installation step for the current repository. Open the index.html file in a modern browser. For a local web server, run this from the repository directory:
+No package installation is required. Open `index.html` in a modern browser, or serve the repository locally:
 
     python -m http.server 8000
 
-Then visit http://localhost:8000.
+Visit http://localhost:8000.
 
 ## Making changes
 
-The page is self-contained in index.html. Keep the layout responsive and preserve the terminal-style contrast when adjusting typography, spacing, or interaction states. If a backend is added later, document its endpoint and setup separately rather than treating the current interface as a working messaging service.
+The page is contained in `index.html`. Preserve the terminal-style contrast and responsive layout when editing it.
