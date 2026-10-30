@@ -8,8 +8,8 @@ No package installation is required. Open `index.html` in a browser, or serve th
 
     python -m http.server 8000
 
-Visit http://localhost:8000. No deployment provider or procedure is documented. To host the page, serve `index.html` and any referenced assets together as static files.
+Visit http://localhost:8000. To host the page, serve `index.html` and any referenced assets together as static files.
 
 ## Making and reviewing changes
 
-The page is contained in `index.html`. After editing, reload the page in your browser and review the terminal-style contrast and layout, including at a narrow window width. If the page does not load as expected, check that you opened the repository's `index.html` or are visiting the local server address above.
+The page is contained in `index.html`. After editing, reload it in your browser and review the terminal-style contrast and layout, including at a narrow window width.
