@@ -16,9 +16,20 @@ Visit [http://localhost:8000](http://localhost:8000). To host the page, serve `i
 
 The page is contained in `index.html`. Edit its visible text and presentation there. If you change or add asset references, keep the referenced files alongside the page at the corresponding relative paths; this repository lists no separate asset directory.
 
+## Deployment-readiness checklist
+
+These are actions to complete before and after publishing, not evidence that a deployment exists or that any checks have passed.
+
+- [ ] Use the repository root as the page's source directory: it contains `index.html`. Make sure the published site root serves that file as its entry page. No separate build output directory or build script is listed for this repository.
+- [ ] Check `index.html` for local asset references. Include every referenced file at the same relative path in the published files; if a path or file changes, update the reference and verify it locally.
+- [ ] No `.env.example` or other configuration template is listed. Do not invent environment variables or add credentials to the HTML or other tracked files. Browser-delivered values are visible to visitors.
+- [ ] Before publishing, open the page locally and check the visible content and controls. The input's appearance does not establish that it sends or saves messages.
+- [ ] After publishing, open the published page in a browser. Confirm that `index.html` loads, the page renders as expected, and any referenced local assets load. Check the browser Console and Network panel for errors or failed requests.
+- [ ] Review the published page at narrow and desktop-sized viewports, and try the visible input and other controls. Confirm their observed behavior rather than assuming a service or data handling.
+
 ## Contributor handoff
 
-Keep a change focused on the intended page or asset. Preserve existing filenames and relative references unless a rename or move is necessary, and update references in `index.html` if paths change. In your handoff, summarize what changed and which files were affected. Manually review the page before publishing; the checklist below describes checks to perform, not results already verified.
+Keep a change focused on the intended page or asset. Preserve existing filenames and relative references unless a rename or move is necessary, and update references in `index.html` if paths change. In your handoff, summarize what changed and which files were affected. Manually review the page before publishing; the checklist above describes checks to perform, not results already verified.
 
 ## Troubleshooting
 
