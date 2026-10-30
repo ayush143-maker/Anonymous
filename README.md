@@ -4,7 +4,7 @@ A compact, terminal-inspired web experiment with a dark screen, green monospace 
 
 ## Open the page
 
-No package installation is required. Open `index.html` in a modern browser, or serve the repository locally:
+No package installation is required. Open `index.html` in a browser, or serve the repository locally:
 
     python -m http.server 8000
 
@@ -12,4 +12,4 @@ Visit http://localhost:8000.
 
 ## Making and reviewing changes
 
-The page is contained in `index.html`. After editing, reload the page in your browser and review the terminal-style contrast and responsive layout, including at a narrow window width.
+The page is contained in `index.html`. After editing, reload the page in your browser and review the terminal-style contrast and layout, including at a narrow window width.
